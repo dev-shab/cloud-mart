@@ -6,10 +6,12 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+import { Provider } from "react-redux";
 import App from "./App";
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
 import reportWebVitals from "./reportWebVitals";
+import store from "./store";
 import "./assets/styles/bootstrap.custom.css";
 import "./assets/styles/index.css";
 
@@ -27,7 +29,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
 
