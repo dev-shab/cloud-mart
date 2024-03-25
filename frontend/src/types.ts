@@ -19,3 +19,11 @@ export interface ProductType {
   numReviews: number;
   reviews: ReviewsType[];
 }
+
+export interface CartDetailsType {
+  cartItems: (ProductType & { qty: number })[];
+  itemsPrice: string;
+  shippingPrice: string;
+  taxPrice: string;
+  totalPrice: string;
+}
