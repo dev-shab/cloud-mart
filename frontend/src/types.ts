@@ -27,3 +27,10 @@ export interface CartDetailsType {
   taxPrice: string;
   totalPrice: string;
 }
+
+export interface UserType {
+  _id: string;
+  name: string;
+  email: string;
+  isAdmin: boolean;
+}
