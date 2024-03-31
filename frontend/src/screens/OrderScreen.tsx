@@ -1,21 +1,22 @@
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Row, Col, ListGroup, Image, Card } from "react-bootstrap";
+import { Row, Col, ListGroup, Image, Card, Button } from "react-bootstrap";
 import {
   PayPalButtons,
   SCRIPT_LOADING_STATE,
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
 import { toast } from "react-toastify";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
   useGetPaypalClientIdQuery,
+  useDeliverOrderMutation,
 } from "../slices/ordersApiSlice";
-// import { RootStateType } from "../store";
+import { RootStateType } from "../store";
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
@@ -27,13 +28,15 @@ const OrderScreen = () => {
   } = useGetOrderDetailsQuery(orderId!);
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
+  const [deliverOrder, { isLoading: loadingDeliver }] =
+    useDeliverOrderMutation();
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
   const {
     data: paypal,
     isLoading: loadingPayPal,
     error: errorPayPal,
   } = useGetPaypalClientIdQuery(null);
-  // const { userInfo } = useSelector((state: RootStateType) => state.auth);
+  const { userInfo } = useSelector((state: RootStateType) => state.auth);
 
   let errMsg = "";
   if (error) {
@@ -97,6 +100,15 @@ const OrderScreen = () => {
         ],
       })
       .then((orderId) => orderId);
+  };
+  const deliverOrderHandler = async () => {
+    try {
+      await deliverOrder(orderId);
+      refetch();
+      toast.success("Order delivered");
+    } catch (error: any) {
+      toast.error(error?.data?.message || error.message);
+    }
   };
 
   return isLoading ? (
@@ -226,7 +238,20 @@ const OrderScreen = () => {
                   )}
                 </ListGroup.Item>
               )}
-              {/* MARK AS DELIVERED PLACEHOLDER */}
+              {!order?.isDelivered && (
+                <ListGroup.Item>
+                  {loadingDeliver && <Loader />}
+                  {userInfo?.isAdmin && order?.isPaid && (
+                    <Button
+                      type="button"
+                      className="btn btn-block"
+                      onClick={deliverOrderHandler}
+                    >
+                      Mark As Delivered
+                    </Button>
+                  )}
+                </ListGroup.Item>
+              )}
             </ListGroup>
           </Card>
         </Col>

@@ -18,8 +18,14 @@ import ShippingScreen from "./screens/ShippingScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
+import OrderListScreen from "./screens/admin/OrderListScreen";
+import ProductListScreen from "./screens/admin/ProductListScreen";
+import UserListScreen from "./screens/admin/UserListScreen";
+import ProductEditScreen from "./screens/admin/ProductEditScreen";
+import UserEditScreen from "./screens/admin/UserEditScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import PrivateRoute from "./components/PrivateRoute";
+import AdminRoute from "./components/AdminRoute";
 import reportWebVitals from "./reportWebVitals";
 import store from "./store";
 import "./assets/styles/bootstrap.custom.css";
@@ -41,6 +47,14 @@ const router = createBrowserRouter(
         <Route path="/order/:id" element={<OrderScreen />} />
         <Route path="/profile" element={<ProfileScreen />} />
       </Route>
+
+      <Route path="" element={<AdminRoute />}>
+        <Route path="/admin/orderList" element={<OrderListScreen />} />
+        <Route path="/admin/productList" element={<ProductListScreen />} />
+        <Route path="/admin/product/:id/edit" element={<ProductEditScreen />} />
+        <Route path="/admin/userList" element={<UserListScreen />} />
+        <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
+      </Route>
     </Route>
   )
 );
@@ -54,8 +68,7 @@ root.render(
       <PayPalScriptProvider
         deferLoading
         options={{
-          clientId:
-            "Ab4QL6N37VT1aoB6n3G89didLPijimmu2vNyVaUIiIoOU7vRaSErhAcO7xo2ETyfB7XRkMyy_MhB3l8O",
+          clientId: "test",
         }}
       >
         <RouterProvider router={router} />
