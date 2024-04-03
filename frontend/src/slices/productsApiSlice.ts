@@ -11,9 +11,9 @@ export type GetProducts = {
 export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query<GetProducts, any>({
-      query: ({ pageNumber }) => ({
+      query: ({ pageNumber, keyword }) => ({
         url: PRODUCTS_URL,
-        params: { pageNumber },
+        params: { pageNumber, keyword },
       }),
       providesTags: ["Product"],
       keepUnusedDataFor: 5,

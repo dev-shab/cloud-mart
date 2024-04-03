@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
 import { RootStateType } from "../store";
+import SearchBox from "./SearchBox";
 import logo from "../assets/logo.png";
 
 const Header = () => {
@@ -41,6 +42,7 @@ const Header = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse>
             <Nav className="ms-auto">
+              <SearchBox />
               <LinkContainer to="/cart">
                 <Nav.Link>
                   <FaShoppingCart /> Cart
