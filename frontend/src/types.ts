@@ -1,8 +1,10 @@
 interface ReviewsType {
+  _id: string;
   user: string;
   name: string;
   rating: number;
   comment: string;
+  createdAt: string;
 }
 
 interface ShippingAddressType {
