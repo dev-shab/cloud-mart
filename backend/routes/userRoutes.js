@@ -11,6 +11,7 @@ import {
   updateUser,
 } from "../contollers/userController.js";
 import { protect, admin } from "../middleware/authMiddleware.js";
+import checkObjectId from "../middleware/checkObjectId.js";
 
 const router = express.Router();
 
@@ -23,8 +24,8 @@ router
   .put(protect, updateUserProfile);
 router
   .route("/:id")
-  .get(protect, admin, getUserById)
-  .put(protect, admin, updateUser)
-  .delete(protect, admin, deleteUser);
+  .get(protect, admin, checkObjectId, getUserById)
+  .put(protect, admin, checkObjectId, updateUser)
+  .delete(protect, admin, checkObjectId, deleteUser);
 
 export default router;

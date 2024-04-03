@@ -4,10 +4,11 @@ import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
+import SearchBox from "./SearchBox";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
+import { resetCart } from "../slices/cartSlice";
 import { RootStateType } from "../store";
-import SearchBox from "./SearchBox";
 import logo from "../assets/logo.png";
 
 const Header = () => {
@@ -23,6 +24,7 @@ const Header = () => {
     try {
       await logoutApiCall(null).unwrap();
       dispatch(logout(null));
+      dispatch(resetCart());
       navigate("/login");
     } catch (error) {
       console.error(error);
